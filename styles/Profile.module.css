@@ -1,0 +1,36 @@
+.profileContainer {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.profileContent {
+  margin-top: 20px;
+}
+
+.input {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+}
+
+.button {
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.update {
+  background-color: #4caf50;
+}
+
+.signout {
+  background-color: #f44336;
+  margin-left: 10px;
+}
+
+.button:hover {
+  background-color: #45a049;
+}

@@ -1,0 +1,57 @@
+/* styles/Layout.module.css */
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  background-color: #333;
+  color: #fff;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+
+.navbar {
+  display: flex;
+}
+
+.navbar a {
+  color: #fff;
+  text-decoration: none;
+  padding: 10px;
+  margin-right: 20px;
+  transition: color 0.3s;
+}
+
+.navbar a:hover {
+  color: #ffd700; /* Change to your preferred hover color */
+}
+
+.userInfo {
+  display: flex;
+  align-items: center;
+}
+
+.logout button {
+  background-color: #fff;
+  color: #333;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.logout button:hover {
+  background-color: #ddd;
+}
+
+.content {
+  padding: 20px;
+}
+
+.active {
+  color: #ffd700; /* Change to your preferred active link color */
+}
