@@ -27,7 +27,6 @@ const SignIn = () => {
       const signInData = response.data;
       if (signInData) {
         setLoading(false);
-        console.log("response signin data :", signInData);
         localStorage.setItem("userData", JSON.stringify(signInData));
         const referrer = "/";
         router.push(referrer);

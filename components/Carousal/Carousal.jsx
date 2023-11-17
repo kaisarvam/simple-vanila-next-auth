@@ -1,4 +1,3 @@
-// components/Carousel.js
 import React, { useCallback, useEffect, useState } from "react";
 import Image from "next/image";
 import { BsArrowLeftCircleFill, BsArrowRightCircleFill } from "react-icons/bs";
