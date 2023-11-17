@@ -2,6 +2,7 @@ import { useState } from "react";
 import styles from "../styles/Signin.module.css";
 import { useRouter } from "next/router";
 import useNoAuth from "../hooks/useNoAuth";
+import axiosInterceptorInstance from "../libs/api/axiosinterceptor";
 
 const SignIn = () => {
   useNoAuth();
@@ -14,26 +15,20 @@ const SignIn = () => {
 
     try {
       setLoading(true);
-      const response = await fetch(
-        "https://eservice.vemate.com/api/v1/account/public/users/signin/",
+
+      const response = await axiosInterceptorInstance.post(
+        "account/public/users/signin/",
         {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            username: email,
-            password,
-            app: 2,
-          }),
+          username: email,
+          password,
+          app: 2,
         }
       );
-
-      if (response.ok) {
+      const signInData = response.data;
+      if (signInData) {
         setLoading(false);
-        const data = await response.json();
-        console.log("response :", data);
-        localStorage.setItem("userData", JSON.stringify(data));
+        console.log("response signin data :", signInData);
+        localStorage.setItem("userData", JSON.stringify(signInData));
         const referrer = "/";
         router.push(referrer);
       } else {

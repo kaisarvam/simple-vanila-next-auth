@@ -3,44 +3,25 @@ import { useRouter } from "next/router";
 import styles from "../styles/Profile.module.css";
 import useAuth from "../hooks/useAuth";
 import Layout from "../components/Layout/Layout";
+import axiosInterceptorInstance from "../libs/api/axiosinterceptor";
 
-const Profile = () => {
+const ProfileTest = () => {
   useAuth();
 
   const router = useRouter();
-  const [token, setToken] = useState("");
   const [loading, setLoading] = useState(false);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-
-  useEffect(() => {
-    const userData = localStorage.getItem("userData");
-    if (userData) {
-      const parsedUserData = JSON.parse(userData);
-      setToken(parsedUserData.token);
-    }
-  }, []);
-
-  const fetchProfileData = useCallback(async (token) => {
+  const fetchProfileData = useCallback(async () => {
     try {
-      const response = await fetch(
-        "https://eservice.vemate.com/api/v1/account/public/users/profile/",
-        {
-          method: "GET",
-          headers: {
-            Authorization: `Token ${token}`,
-          },
-        }
+      const response = await axiosInterceptorInstance.get(
+        "account/public/users/profile/"
       );
-
-      if (response.ok) {
-        const profileData = await response.json();
+      const profileData = response.data;
+      if (profileData) {
         setFirstName(profileData.first_name || "");
         setLastName(profileData.last_name || "");
         setLoading(false);
-      } else {
-        setLoading(false);
-        console.error("Failed to fetch profile data");
       }
     } catch (error) {
       setLoading(false);
@@ -49,31 +30,21 @@ const Profile = () => {
   }, []);
 
   useEffect(() => {
-    if (token) {
-      fetchProfileData(token);
-    }
-  }, [fetchProfileData, token]);
+    fetchProfileData();
+  }, [fetchProfileData]);
 
   const handleUpdateProfile = async () => {
     try {
       setLoading(true);
-      const response = await fetch(
-        "https://eservice.vemate.com/api/v1/account/public/users/profile/",
+      const response = await axiosInterceptorInstance.patch(
+        "account/public/users/profile/",
         {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Token ${token}`,
-          },
-          body: JSON.stringify({
-            first_name: firstName,
-            last_name: lastName,
-          }),
+          first_name: firstName,
+          last_name: lastName,
         }
       );
-
-      if (response.ok) {
-        fetchProfileData(token);
+      if (response.status === 200) {
+        fetchProfileData();
       } else {
         setLoading(false);
         console.error("Profile update failed");
@@ -85,9 +56,7 @@ const Profile = () => {
   };
 
   const handleSignOut = () => {
-    // Clear user data from local storage
     localStorage.removeItem("userData");
-    // Redirect to signin page
     router.push("/signin");
   };
 
@@ -130,4 +99,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default ProfileTest;
