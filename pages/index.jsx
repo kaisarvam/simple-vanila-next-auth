@@ -1,17 +1,11 @@
 import React from "react";
 import useAuth from "../hooks/useAuth";
-import Layout from "../components/Layout/Layout";
-import Carousel from "../components/Carousal/Carousal";
-import { slides } from "../data/carouselData.json";
+import Home from "../components/Home/Home";
 
-const Home = () => {
+const HomePage = () => {
   useAuth();
 
-  return (
-    <Layout>
-      <Carousel data={slides} />
-    </Layout>
-  );
+  return <Home />;
 };
 
-export default Home;
+export default HomePage;
